@@ -51,7 +51,7 @@ namespace SampleWebApplication.FunctionalTests
                     var currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     if(currentTimestamp > endTimstamp)
                     {
-                        Console.Write("##vso[task.logissue type=error;]Test SampleFunctionalTest1 failed with error: " + e.ToString());
+        
                         throw;
                     }
                     Thread.Sleep(5000);
