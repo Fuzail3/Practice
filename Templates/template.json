@@ -1,0 +1,98 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Database Administrator Login": {
+            "type": "String",
+            "metadata": {
+                "description": "Database administrator login name"
+            }
+        },
+        "Database Administrator Login Password": {
+            "type": "SecureString",
+            "metadata": {
+                "description": "Database administrator password"
+            }
+        }
+    },
+    "variables": {
+        "hostingPlanName": "ASP419",
+        "siteName": "Webapp419",
+        "serverName": "SN419",
+        "databaseName": "DBN419",
+        "databaseVersion": "12.0"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            "name": "[variables('hostingPlanName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "Tier": "Standard",
+                "Name": "S1"
+            },
+            "properties": {
+                "name": "[variables('hostingPlanName')]",
+                "workerSize": "1",
+                "hostingEnvironment": "",
+                "numberOfWorkers": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2015-02-01",
+            "name": "[variables('siteName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[variables('siteName')]",
+                "serverFarmId": "[variables('hostingPlanName')]",
+                "hostingEnvironment": ""
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2014-04-01",
+            "name": "[variables('serverName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "administratorLogin": "[parameters('Database Administrator Login')]",
+                "administratorLoginPassword": "[parameters('Database Administrator Login Password')]",
+                "version": "[variables('databaseVersion')]"
+            },
+            "resources": [
+                {
+                    "type": "databases",
+                    "apiVersion": "2015-01-01",
+                    "name": "[variables('databaseName')]",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[variables('serverName')]"
+                    ],
+                    "properties": {
+                        "edition": "Basic",
+                        "collation": "SQL_Latin1_General_CP1_CI_AS",
+                        "maxSizeBytes": "1073741824",
+                        "requestedServiceObjectiveName": "Basic"
+                    }
+                },
+                {
+                    "type": "firewallrules",
+                    "apiVersion": "2014-04-01",
+                    "name": "AllowAllWindowsAzureIps",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[variables('serverName')]"
+                    ],
+                    "properties": {
+                        "endIpAddress": "0.0.0.0",
+                        "startIpAddress": "0.0.0.0"
+                    }
+                }
+            ]
+        }
+    ]
+}
