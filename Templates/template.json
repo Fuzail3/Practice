@@ -59,8 +59,8 @@
             "name": "[variables('serverName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "administratorLogin": "[parameters('Database Administrator Login')]",
-                "administratorLoginPassword": "[parameters('Database Administrator Login Password')]",
+                "administratorLogin": "[parameters('DatabaseUN')]",
+                "administratorLoginPassword": "[parameters('DatabasePassword')]",
                 "version": "[variables('databaseVersion')]"
             },
             "resources": [
