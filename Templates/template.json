@@ -18,8 +18,8 @@
     "variables": {
         "hostingPlanName": "ASP419",
         "siteName": "Webapp419",
-        "serverName": "SN419",
-        "databaseName": "DBN419",
+        "serverName": "snf419",
+        "databaseName": "dbn419",
         "databaseVersion": "12.0"
     },
     "resources": [
