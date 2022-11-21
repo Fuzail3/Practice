@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "value": "WebApp419"
+        },
+        "hostingPlanName": {
+            "value": "ASP419"
+        },
+        "appInsightsLocation": {
+            "value": "South Central US"
+        },
+         "databaseServerName": {
+            "value": "dbn419"
+        },
+         "databaseUsername": {
+            "value": "db419"
+        },
+         "databasePassword": {
+            "value": "FuzailAhamed419@"
+        },
+         "databaseLocation": {
+            "value": "South Central US"
+        },
+         "databaseName": {
+            "value": "dbn421"
+        },
+         "databaseEdition": {
+            "value": "Basic"
+        },
+         "sku": {
+            "value": "Standard S1"
+        }
+
+    }
+}
